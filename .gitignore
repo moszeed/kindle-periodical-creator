@@ -1,0 +1,9 @@
+/git
+/dist
+/node_modules
+/bin
+/book
+/package-lock.json
+/compiled
+secrets.json
+.git

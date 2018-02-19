@@ -1,0 +1,26 @@
+{
+  "name": "kindle-periodical-creator",
+  "version": "0.1.0",
+  "description": "a tool to create a kindle periodical",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --debug | npm run build",
+    "build": "watchify ./client/app.js -x kindle-periodical -o ./dist/app.js --verbose"
+  },
+  "keywords": [
+    "kindle",
+    "periodical",
+    "app",
+    "electron"
+  ],
+  "dependencies": {
+    "kindle-periodical": "latest"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "choo": "latest",
+    "watchify": "latest"
+  },
+  "author": "Michael Röber",
+  "license": "MIT"
+}
