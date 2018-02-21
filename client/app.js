@@ -48,6 +48,18 @@
 
 		const $sections = state.bookData.sections.map((section, sectionIndex) => {
 			const $articles = section.articles.map((article, articleIndex) => {
+				return html`<li class="article">
+    				<label>
+    					<span>title</span>
+    					<input value="${article.title}" oninput=${(event) => changeArticleParams('title', event, sectionIndex, articleIndex )} type="text" />
+    				</label>
+    				<label>
+    					<span>author</span>
+    					<input value="${article.author}" oninput=${(event) => changeArticleParams('author', event, sectionIndex, articleIndex )} type="text" />
+    				</label>
+    			</li>`;
+    			
+				/**
    				return html`<li class="article">
     				<label><span>title</span><input value="${article.title}" oninput=${(event) => changeArticleParams('title', event, sectionIndex, articleIndex )} type="text" /></label>
     				<label><span>author</span><input value="${article.author}" oninput=${(event) => changeArticleParams('author', event, sectionIndex, articleIndex )} type="text" /></label>
@@ -55,10 +67,14 @@
     				<label><span>url</span><input value="${article.url}" oninput=${(event) => changeArticleParams('url', event, sectionIndex, articleIndex )} type="text" /></label>
     				<label><span>file</span><input value="${article.file}" oninput=${(event) => changeArticleParams('file', event, sectionIndex, articleIndex )} type="text" /></label>
     			</li>`;
+    			**/
 			});
 
 			return html`<li class="section">
-				<label><span>title</span><input value="${section.title}" oninput=${(event) => changeSectionsParams('title', event, sectionIndex)} type="text" /></label>
+				<label class="title">
+					<span>title</span>
+					<input value="${section.title}" oninput=${(event) => changeSectionsParams('title', event, sectionIndex)} type="text" />
+				</label>
 				<h3>articles</h3>
 				<ul>${$articles}</ul>
 				<button type="button" onclick=${() => addArticle(sectionIndex)}>add article</button>
@@ -68,68 +84,122 @@
 		return html`
 			<body>
 				<style>
-					main {
-						display: flex;
+					* {
+						box-sizing: border-box;
 					}
 
-					main fieldset {
-						border: none;
+					html {
+						height: 100%;
+						width: 100%
+						overflow: hidden;
+
+						font-size: 1em;
+					}
+
+					body {
+						display: flex;
+    					flex-direction: column;
+    					height: 100%;
+    					overflow: hidden;
+    					margin: 0;
+					}
+
+					main {
+						display: flex;
+						height: 100%;
+					}
+
+					main section#book {
+						flex-basis: 300px;
+						flex-shrink: 0;
+						flex-grow: 0;
+
+						height: 100%;
+						overflow-y: auto;
+
+						background-color: #d8d18d;
+					}
+
+					main section#sections {
+						flex-basis: 350px;
+						flex-shrink: 0;
+						flex-grow: 0;
+
+						height: 100%;
+						overflow-y: auto;
+
+						background-color: #e6e1b2;
+					}
+
+					main section#article-detail {
+						flex-grow: 1;
+						flex-shrink: 0;
+
+						height: 100%;
+						overflow-y: auto;
+
+						background-color: #f3f0d8;
+					}
+
+					h3 {
+						margin-left: 10px;
+						text-transform:uppercase;
+						font-size: 90%;
+					}
+
+					fieldset {
+						border: 0;
+					}
+
+					ul {
+						list-style-type: none;
+						padding: 0;
+						margin: 0;
+					}
+
+					ul li.section {
+						border-top: 1px solid #333;
+						background-color: #DEDEDE;
+					}
+
+					ul li.section ul li.article {
+						padding: 10px;
+						border-top: 1px solid #A0A0A0;
+						background-color: #EFEFEF;
+					}
+
+					ul li.section button {
+						width: 100%;
+    					padding: 5px 10px;
+    					background-color: #f7f7f7;
+    					border: 1px solid #DEDEDE;
 					}
 
 					label {
-						display: block;
+						display: flex;
+						margin-top: 5px;
 					}
 
 					label span {
-						display: inline-block;
-						vertical-align: top;
-						width: 100px;
-					}
-
-					label textarea,
-					label input {
-						margin-bottom: 10px;
-						width: 200px;
-					}
-
-					label textarea {
-						height: 100px;
-					}
-
-					section#book {
-						flex-basis: 400px;
-						flex-shrink: 0;
+						flex-basis: 100px;
 						flex-grow: 0;
+						flex-shrink: 0;
+
+						font-size: 90%;
 					}
 
-					section#sections {
-						flex-grow: 1;
-						overflow: auto;
+					label input,
+					label textarea {
+						flex-basis: 100px;
+						flex-grow: 0;
+						flex-shrink: 0;
+
+						font-size: 90%;
 					}
 
-					section#sections ul {
-						margin: 0;
-						padding: 0;
-						list-style-type: none;
-					}
-
-					section#sections ul li.section {
-						padding: 10px;
-						flex-basis: 400px;
-    					flex-shrink: 0;
-    					border-left: 1px solid #A0A0A0;
-					}
-
-					section#sections ul li.section .article {
-						background-color: #DEDEDE;
-						border: 1px solid #A0A0A0;
-						padding: 20px 10px 20px 30px;
-						margin-bottom: 10px;
-					}
-
-					section#sections ul#sections {
-						display: flex;
-						flex-direction: column;
+					ul li.section label {
+						margin-top: 5px;
+						margin-left: 10px;
 					}
 
 
@@ -155,6 +225,9 @@
 						<h3>sections</h3>
 						<ul id="sections">${$sections}</ul>
 						<button type="button" onclick=${() => addSection()}>add section</button>
+					</section>
+					<section id="article-detail">
+						TEST
 					</section>
 				</main>
 			</body>
